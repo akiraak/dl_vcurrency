@@ -1,11 +1,16 @@
 package main
 
 import (
+	"archive/zip"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path"
+	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -381,12 +386,73 @@ func getUrlContent(url string) ([]byte, error) {
 	return body, err
 }
 
-func saveFile(data []byte, id int, date string) error {
-	idStr := fmt.Sprintf("%04d", id)
-	dir := fmt.Sprintf("contents/%s", idStr)
+func saveFile(data []byte, id int, dir string) error {
+	//idStr := fmt.Sprintf("%04d", id)
+	//dir := fmt.Sprintf("contents/%s", idStr)
 	os.MkdirAll(dir, os.FileMode(0700))
-	path := fmt.Sprintf("%s/%s-%s.json", dir, idStr, date)
-	err := ioutil.WriteFile(path, data, os.FileMode(0600))
+	filePath := path.Join(dir, fmt.Sprintf("%04d.json", id))
+	err := ioutil.WriteFile(filePath, data, os.FileMode(0600))
+	return err
+}
+
+func zipit(source, target string) error {
+	zipfile, err := os.Create(target)
+	if err != nil {
+		return err
+	}
+	defer zipfile.Close()
+
+	archive := zip.NewWriter(zipfile)
+	defer archive.Close()
+
+	info, err := os.Stat(source)
+	if err != nil {
+		return nil
+	}
+
+	var baseDir string
+	if info.IsDir() {
+		baseDir = filepath.Base(source)
+	}
+
+	filepath.Walk(source, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		header, err := zip.FileInfoHeader(info)
+		if err != nil {
+			return err
+		}
+
+		if baseDir != "" {
+			header.Name = filepath.Join(baseDir, strings.TrimPrefix(path, source))
+		}
+
+		if info.IsDir() {
+			header.Name += "/"
+		} else {
+			header.Method = zip.Deflate
+		}
+
+		writer, err := archive.CreateHeader(header)
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() {
+			return nil
+		}
+
+		file, err := os.Open(path)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		_, err = io.Copy(writer, file)
+		return err
+	})
+
 	return err
 }
 
@@ -394,6 +460,7 @@ func main() {
 	now := time.Now().UTC()
 	fmt.Println(now)
 	date := now.Format("20060102-150405")
+	dir := path.Join("contents", date)
 
 	errors := make(chan error)
 	threads := make(chan struct{}, 64)
@@ -401,17 +468,17 @@ func main() {
 	for i, url := range urls {
 		id := i + 1
 		//fmt.Printf("%04d: %s\n", id, url)
-		go func(id int, url string, date string) {
+		go func(id int, url string, dir string) {
 			threads <- struct{}{}
 			defer func() { <-threads }()
 
 			content, err := getUrlContent(url)
 			if err == nil {
-				errors <- saveFile(content, id, date)
+				errors <- saveFile(content, id, dir)
 			} else {
 				errors <- err
 			}
-		}(id, url, date)
+		}(id, url, dir)
 	}
 
 	successes := 0
@@ -426,4 +493,9 @@ func main() {
 		}
 	}
 	fmt.Printf("Total:%d Successes:%d Failures:%d\n", len(urls), successes, failures)
+
+	zipPath := fmt.Sprintf("%s.zip", dir)
+	zipit(dir, zipPath)
+	os.RemoveAll(dir)
+	fmt.Printf("Create: %s", zipPath)
 }
