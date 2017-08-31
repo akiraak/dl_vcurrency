@@ -457,10 +457,16 @@ func zipit(source, target string) error {
 }
 
 func main() {
+	if len(os.Args) != 2 {
+		fmt.Println("Zipファイルの出力先を指定してください。")
+		os.Exit(1)
+	}
+	output := os.Args[1]
+
 	now := time.Now().UTC()
 	fmt.Println(now)
 	date := now.Format("20060102-150405")
-	dir := path.Join("contents", date)
+	dir := path.Join(output, date)
 
 	errors := make(chan error)
 	threads := make(chan struct{}, 64)
