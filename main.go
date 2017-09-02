@@ -465,7 +465,7 @@ func main() {
 
 	now := time.Now().UTC()
 	fmt.Println(now)
-	date := now.Format("20060102-150405")
+	date := now.Format("20060102-1504")
 	dir := path.Join(output, date)
 
 	errors := make(chan error)
