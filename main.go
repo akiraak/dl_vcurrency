@@ -104,7 +104,8 @@ var services = Services{
 			"BTCJPY_MAT2WK"},
 		ApiUrls: ApiUrls{
 			"https://api.bitflyer.jp/v1/ticker?product_code=%s",
-			"https://api.bitflyer.jp/v1/board?product_code=%s"},
+			"https://api.bitflyer.jp/v1/board?product_code=%s",
+			"https://api.bitflyer.jp/v1/executions?product_code=%s"},
 	},
 	// https://docs.bitbank.cc/
 	Service{
@@ -116,7 +117,8 @@ var services = Services{
 			"bcc_jpy"},
 		ApiUrls: ApiUrls{
 			"https://public.bitbank.cc/%s/ticker",
-			"https://public.bitbank.cc/%s/ticker"},
+			"https://public.bitbank.cc/%s/ticker",
+			"https://public.bitbank.cc/%s/transactions"},
 	},
 	// https://www.btcbox.co.jp/help/asm
 	Service{
@@ -125,7 +127,8 @@ var services = Services{
 			""},
 		ApiUrls: ApiUrls{
 			"https://www.btcbox.co.jp/api/v1/ticker/",
-			"https://www.btcbox.co.jp/api/v1/depth/"},
+			"https://www.btcbox.co.jp/api/v1/depth/",
+			"https://www.btcbox.co.jp/api/v1/orders/"},
 	},
 	// https://coincheck.com/ja/documents/exchange/api
 	Service{
@@ -134,7 +137,8 @@ var services = Services{
 			""},
 		ApiUrls: ApiUrls{
 			"https://coincheck.com/api/ticker",
-			"https://coincheck.com/api/order_books"},
+			"https://coincheck.com/api/order_books",
+			"https://coincheck.com/api/trades"},
 	},
 	// https://corp.zaif.jp/api-docs/
 	Service{
@@ -145,7 +149,8 @@ var services = Services{
 			"mona_jpy"},
 		ApiUrls: ApiUrls{
 			"https://api.zaif.jp/api/1/ticker/%s",
-			"https://api.zaif.jp/api/1/depth/%s"},
+			"https://api.zaif.jp/api/1/depth/%s",
+			"https://api.zaif.jp/api/1/trades/%s"},
 	},
 	// https://www.kraken.com/help/api
 	Service{
@@ -208,7 +213,8 @@ var services = Services{
 			"XZECZUSD"},
 		ApiUrls: ApiUrls{
 			"https://api.kraken.com/0/public/Ticker?pair=%s",
-			"https://api.kraken.com/0/public/Depth?pair=%s"},
+			"https://api.kraken.com/0/public/Depth?pair=%s",
+			"https://api.kraken.com/0/public/Trades?pair=%s"},
 	},
 	// https://fcce.jp/api-docs
 	Service{
@@ -217,9 +223,9 @@ var services = Services{
 			"btc_jpy",
 			"mona_jpy"},
 		ApiUrls: ApiUrls{
-			"",
 			"https://api.fcce.jp/api/1/ticker/%s",
-			"https://api.fcce.jp/api/1/depth/%s"},
+			"https://api.fcce.jp/api/1/depth/%s",
+			"https://api.fcce.jp/api/1/trades/%s"},
 	},
 	// https://firex.jp/api-docs
 	Service{
@@ -228,7 +234,8 @@ var services = Services{
 			"btc_jpy"},
 		ApiUrls: ApiUrls{
 			"https://api.firex.jp/api/1/ticker/%s",
-			"https://api.firex.jp/api/1/depth/%s"},
+			"https://api.firex.jp/api/1/depth/%s",
+			"https://api.firex.jp/api/1/trades/%s"},
 	},
 	// https://www.bitstamp.net/api/
 	Service{
@@ -245,7 +252,8 @@ var services = Services{
 			"etheur"},
 		ApiUrls: ApiUrls{
 			"https://www.bitstamp.net/api/v2/ticker/%s",
-			"https://www.bitstamp.net/api/v2/order_book/%s"},
+			"https://www.bitstamp.net/api/v2/order_book/%s",
+			"https://www.bitstamp.net/api/v2/transactions/%s"},
 	},
 	// https://www.btcc.com/apidocs/usd-spot-exchange-market-data-rest-api
 	Service{
@@ -254,7 +262,8 @@ var services = Services{
 			"btcusd"},
 		ApiUrls: ApiUrls{
 			"https://spotusd-data.btcc.com/data/pro/ticker?symbol=%s",
-			"https://spotusd-data.btcc.com/data/pro/orderbook?symbol=%s"},
+			"https://spotusd-data.btcc.com/data/pro/orderbook?symbol=%s",
+			"https://spotusd-data.btcc.com/data/pro/historydata?symbol=%s"},
 	},
 	// https://www.okcoin.com/rest_api.html
 	Service{
@@ -267,7 +276,8 @@ var services = Services{
 			"bcc_usd"},
 		ApiUrls: ApiUrls{
 			"https://www.okcoin.com/api/v1/ticker.do?symbol=%s",
-			"https://www.okcoin.com/api/v1/depth.do?symbol=%s"},
+			"https://www.okcoin.com/api/v1/depth.do?symbol=%s",
+			"https://www.okcoin.com/api/v1/trades.do?symbol=%s"},
 	},
 	// https://github.com/huobiapi/API_Docs_en/wiki
 	Service{
@@ -277,7 +287,8 @@ var services = Services{
 			"ltc"},
 		ApiUrls: ApiUrls{
 			"http://api.huobi.com/staticmarket/ticker_%s_json.js",
-			"http://api.huobi.com/staticmarket/depth_%s_json.js"},
+			"http://api.huobi.com/staticmarket/depth_%s_json.js",
+			"http://api.huobi.com/staticmarket/detail_%s_json.js"},
 	},
 	Service{
 		Name: "huobiusd",
@@ -285,7 +296,8 @@ var services = Services{
 			"btc"},
 		ApiUrls: ApiUrls{
 			"http://api.huobi.com/usdmarket/ticker_%s_json.js",
-			"http://api.huobi.com/usdmarket/depth_%s_json.js"},
+			"http://api.huobi.com/usdmarket/depth_%s_json.js",
+			"http://api.huobi.com/usdmarket/detail_%s_json.js"},
 	},
 	// https://docs.bitfinex.com/v1/reference#rest-public-ticker
 	Service{
@@ -309,7 +321,8 @@ var services = Services{
 			"bchusd"},
 		ApiUrls: ApiUrls{
 			"https://api.bitfinex.com/v1/pubticker/%s",
-			"https://api.bitfinex.com/v1/book/%s"},
+			"https://api.bitfinex.com/v1/book/%s",
+			"https://api.bitfinex.com/v1/trades/%s"},
 	},
 	// https://poloniex.com/support/api/
 	Service{
@@ -338,7 +351,8 @@ var services = Services{
 			"USDT_STR"},
 		ApiUrls: ApiUrls{
 			"",
-			"https://poloniex.com/public?command=returnOrderBook&currencyPair=%s"},
+			"https://poloniex.com/public?command=returnOrderBook&currencyPair=%s",
+			"https://poloniex.com/public?command=returnTradeHistory&currencyPair=%s"},
 	},
 	// https://www.bithumb.com/u1/US127
 	Service{
@@ -353,7 +367,8 @@ var services = Services{
 			"BCH"},
 		ApiUrls: ApiUrls{
 			"https://api.bithumb.com/public/ticker/%s",
-			"https://api.bithumb.com/public/orderbook/%s"},
+			"https://api.bithumb.com/public/orderbook/%s",
+			"https://api.bithumb.com/public/recent_transactions/%s"},
 	},
 	// https://bittrex.com/home/api
 	Service{
@@ -371,7 +386,8 @@ var services = Services{
 			"USDT-ZEC"},
 		ApiUrls: ApiUrls{
 			"https://bittrex.com/api/v1.1/public/getticker?market=%s",
-			"https://bittrex.com/api/v1.1/public/getorderbook?market=%s&type=both"},
+			"https://bittrex.com/api/v1.1/public/getorderbook?market=%s&type=both",
+			"https://bittrex.com/api/v1.1/public/getmarkethistory?market=%s"},
 	},
 	// https://hitbtc.com/api
 	Service{
@@ -386,7 +402,8 @@ var services = Services{
 			"STEEMEUR"},
 		ApiUrls: ApiUrls{
 			"https://api.hitbtc.com/api/1/public/%s/ticker",
-			"https://api.hitbtc.com/api/1/public/%s/orderbook"},
+			"https://api.hitbtc.com/api/1/public/%s/orderbook",
+			"https://api.hitbtc.com/api/1/public/%s/trades/recent"},
 	},
 	// https://docs.gemini.com/rest-api/
 	Service{
@@ -396,7 +413,8 @@ var services = Services{
 			"ethusd"},
 		ApiUrls: ApiUrls{
 			"https://api.gemini.com/v1/pubticker/%s",
-			"https://api.gemini.com/v1/book/%s"},
+			"https://api.gemini.com/v1/book/%s",
+			"https://api.gemini.com/v1/trades/%s"},
 	},
 }
 
